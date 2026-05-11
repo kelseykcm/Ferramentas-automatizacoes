@@ -1,0 +1,143 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Python Virtual Environments
+venv/
+env/
+ENV/
+.venv/
+
+# Python Packaging
+build/
+develop-eggs/
+dist/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# PyInstaller
+*.manifest
+*.spec
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+.hypothesis/
+
+# Translations
+*.mo
+*.pot
+
+# Flask
+instance/
+.webassets-cache
+
+# Scrapy
+.scrapy
+
+# Sphinx
+docs/_build/
+
+# Jupyter
+.ipynb_checkpoints
+
+# mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# pyenv
+.python-version
+
+# dotenv
+.env
+
+# C/C++
+*.[oa]
+*.ko
+*.obj
+*.exe
+*.dll
+*.so
+*.dylib
+*.a
+build/
+Debug/
+Release/
+
+# PCAP and network traffic logs
+*.pcap
+*.pcapng
+captures/
+traffic/
+
+# Logs
+*.log
+logs/
+
+# API keys, secrets, and sensitive configs
+*.key
+*.pem
+*.crt
+*.cer
+private_key*
+public_key*
+api_key*
+secret*
+password*
+config.private
+secrets/
+config.json
+secrets.yaml
+secrets.json
+
+# AI/ML models and data
+*.h5
+*.pth
+*.ckpt
+*.pkl
+models/
+checkpoints/
+datasets/
+
+# Binaries
+*.bin
+bin/
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS generated
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Temp files
+*~
+.tmp
+
