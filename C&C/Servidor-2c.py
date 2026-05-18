@@ -4,9 +4,9 @@ import sys
 try:
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-    s.bind(('192.168.0.110', 8443))
+    s.bind(('192.168.0.112', 8443))
     s.listen(1)
-    print('Server listening on 192.168.0.110:8443')
+    print('Server listening on 192.168.0.112:8443')
 
     conn, addr = s.accept()
     print(f'Connected by {addr}')

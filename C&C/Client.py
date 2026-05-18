@@ -8,7 +8,7 @@ while True:
     
     try:
         client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        client.connect(("192.168.0.110", 8443))
+        client.connect(("192.168.0.112", 8443))
         
         while True:
             cmd = client.recv(2048).decode()
