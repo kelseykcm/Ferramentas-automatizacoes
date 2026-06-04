@@ -78,6 +78,7 @@ def coletar():
             ('ps aux', 'ps_aux'),
             ('top -b -n1', 'top'),
             ('pstree -a',  'pstree'),
+            ('lsof -T',  'lsof'),
         ]
         comandos_sistema = [
             ('uname -a', 'uname'),
