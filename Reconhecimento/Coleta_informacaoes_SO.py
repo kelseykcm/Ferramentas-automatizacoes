@@ -60,6 +60,7 @@ def coletar():
         ]
         comandos_sistema = [
             ('systeminfo', 'systeminfo'),
+            ('perfmon /report', 'performance'),
             ('wmic os get caption,version', 'os_info'),
             ('dir C:\\Users', 'usuarios'),
         ]
@@ -68,7 +69,7 @@ def coletar():
             ('ip addr', 'ip_addr'),
             ('arp -a', 'arp'),
             ('netstat -tuln', 'netstat'),
-            ('dig localhost', 'dns'),
+            ('dig www.google.com', 'dns'),
             ('ss -tuln', 'ss'),
             ('mount', 'mount'),
             ('crontab -l', 'crontab'),

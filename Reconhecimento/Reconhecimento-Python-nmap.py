@@ -1,26 +1,63 @@
 import nmap
+import argparse
+import logging
+import sys
 from datetime import datetime
 
-scanner = nmap.PortScanner()
-alvo = "portalweb.coxupe.com.br"
-portas = "20-10000"
+logging.basicConfig(level=logging.INFO, format='[%(levelname)s] %(message)s')
+logger = logging.getLogger(__name__)
 
-print(f"Iniciando a varredura no alvo {alvo}")
-scanner.scan(alvo, portas, arguments="-sV")
+class StealthScanner:
+    def __init__(self, target, ports):
+        self.target = target
+        self.ports = ports
+        self.scanner = nmap.PortScanner()
+        self.args = '-sS -f -Pn -n -T3 -sV'
 
-# Formatação de data sem caracteres inválidos para nomes de arquivos
-data_atual = datetime.now().strftime("%d-%m-%Y_%H-%M-%S")
-arquivo = f"relatorio_{data_atual}.txt"
+    def run_scan(self):
+        try:
+            logger.info(f"Starting stealth scan on {self.target} (Ports: {self.ports})")
+            self.scanner.scan(self.target, self.ports, arguments=self.args)
+            return self.scanner
+        except nmap.PortScannerError as e:
+            logger.error(f"Nmap error: {e}")
+        except Exception as e:
+            logger.error(f"Unexpected error: {e}")
+        return None
 
-with open(arquivo, "w") as relatorio:
-    for host in scanner.all_hosts():
-        relatorio.write(f"HOST: {host} {scanner[host].hostname()}\n")
-        for proto in scanner[host].all_protocols():
-            relatorio.write(f" PROTOCOLO: {proto}\n")
-            # Corrigido: scanner[host][proto] é um dicionário, usamos .keys() para iterar as portas
-            for porta in scanner[host][proto].keys():
-                relatorio.write(f" PORTA: {porta}\n")
-                relatorio.write(f" ESTADO: {scanner[host][proto][porta]['state']}\n")
-                if 'name' in scanner[host][proto][porta]:
-                    relatorio.write(f" NOME: {scanner[host][proto][porta]['name']}\n")
-        relatorio.write("\n")
+    def generate_report(self, scanner):
+        filename = f"scan_report_{self.target}_{datetime.now().strftime('%Y%m%d_%H%M%S')}.txt"
+        try:
+            with open(filename, 'w') as f:
+                f.write(f"Scan Report for {self.target}\n")
+                f.write(f"Date: {datetime.now()}\n")
+                f.write("-"*30 + "\n")
+                for host in scanner.all_hosts():
+                    f.write(f"Host: {host} ({scanner[host].state()})\n")
+                    for proto in scanner[host].all_protocols():
+                        ports = scanner[host][proto].keys()
+                        for port in sorted(ports):
+                            state = scanner[host][proto][port]['state']
+                            service = scanner[host][proto][port].get('name', 'unknown')
+                            f.write(f"Port: {port}\tState: {state}\tService: {service}\n")
+            logger.info(f"Report saved to {filename}")
+        except IOError as e:
+            logger.error(f"Failed to write report: {e}")
+
+def main():
+    parser = argparse.ArgumentParser(description="Professional Stealth Nmap Scanner")
+    parser.add_argument("target", help="Target IP or domain")
+    parser.add_argument("-p", "--ports", default="1-1024", help="Port range (e.g., 20-10000)")
+    args = parser.parse_args()
+
+    scanner_obj = StealthScanner(args.target, args.ports)
+    try:
+        results = scanner_obj.run_scan()
+        if results:
+            scanner_obj.generate_report(results)
+    except KeyboardInterrupt:
+        logger.warning("Scan interrupted by user. Exiting.")
+        sys.exit(0)
+
+if __name__ == "__main__":
+    main()
