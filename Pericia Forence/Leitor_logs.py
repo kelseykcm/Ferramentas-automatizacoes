@@ -9,7 +9,7 @@ with open(arquivo_log, "r", encoding="utf-8") as f:
         partes = linha.strip().split("-")
         if len(partes) != 4:
             continue
-        data, ip, recurso, codigo = partes
+           data, ip, recurso, codigo = partes
         codigo = int(codigo)
         
         if codigo == 401 in recurso:

@@ -4,14 +4,14 @@ import os
 
 # Configuração do proxy TOR
 proxies = {
-    'http': 'socks5h://127.0.0.1:9050',
-    'https': 'socks5h://127.0.0.1:9050',
+    'http': 'socks5://127.0.0.1:9050',
+    'https': 'socks5://127.0.0.1:9050',
 }
 
 def start_tor():
     os.system('sh -c \'/home/kelsey/Downloads/tor-browser/Browser/start-tor-browser --detach || ([ !  -x "/home/kelsey/Downloads/tor-browser/Browser/start-tor-browser" ] && "$(dirname "$*")"/Browser/start-tor-browser --detach)\' dummy %k')
     
-})
+
 
 def fetch_onion_site(url):
     try:
